@@ -1,0 +1,41 @@
+{
+  "application": {
+    "name": "acme-support-assistant",
+    "environment": "local",
+    "default_provider": "acme-fast",
+    "system_prompt_file": "../prompts/system-chat.txt",
+    "default_user_message_file": "../prompts/default-user-message.txt"
+  },
+  "request_defaults": {
+    "temperature": 0.2,
+    "max_tokens": 240,
+    "timeout_seconds": 30
+  },
+  "providers": {
+    "acme-fast": {
+      "type": "mock",
+      "model": "acme-fast-v1",
+      "fixture": "../fixtures/acme-fast-success.json",
+      "latency_ms": 90
+    },
+    "acme-reliable": {
+      "type": "mock",
+      "model": "acme-reliable-v1",
+      "fixture": "../fixtures/acme-reliable-success.json",
+      "latency_ms": 140
+    },
+    "acme-rate-limited": {
+      "type": "mock",
+      "model": "acme-rate-limited-v1",
+      "fixture": "../fixtures/acme-rate-limit.json",
+      "latency_ms": 70
+    },
+    "openai-compatible": {
+      "type": "openai_compatible",
+      "api_url_env": "MODEL_API_URL",
+      "api_key_env": "MODEL_API_KEY",
+      "model_env": "MODEL_NAME",
+      "model_fallback": "example-foundation-model"
+    }
+  }
+}

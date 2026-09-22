@@ -1,0 +1,13 @@
+{
+  "status_code": 429,
+  "headers": {
+    "x-request-id": "acme-rate-limit-001"
+  },
+  "body": {
+    "error": {
+      "message": "Rate limit exceeded for provider alias acme-rate-limited.",
+      "type": "rate_limit_error",
+      "code": "rate_limit_exceeded"
+    }
+  }
+}

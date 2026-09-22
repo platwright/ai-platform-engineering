@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sample-chat-config
+data:
+  MODEL_API_BASE_URL: http://model-api:8000
+  MODEL_API_PROVIDER: acme-fast

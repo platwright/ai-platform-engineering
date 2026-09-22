@@ -1,0 +1,101 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ai-gateway-stack
+  namespace: argocd
+  labels:
+    platform: acme-ai
+    tier: gateway
+spec:
+  project: ai-platform
+
+  source:
+    repoURL: https://github.com/acme-ai/ai-platform-engineering
+    targetRevision: main
+    path: platform/kubernetes/ai-gateway
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ai-gateway
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+
+  # Notify on sync failure and out-of-sync events
+  revisionHistoryLimit: 5
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: rag-platform-stack
+  namespace: argocd
+  labels:
+    platform: acme-ai
+    tier: rag
+spec:
+  project: ai-platform
+
+  source:
+    repoURL: https://github.com/acme-ai/ai-platform-engineering
+    targetRevision: main
+    path: platform/kubernetes/rag-platform
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: rag-platform
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: ai-platform
+  namespace: argocd
+spec:
+  description: Acme AI platform services
+  sourceRepos:
+    - "https://github.com/acme-ai/ai-platform-engineering"
+  destinations:
+    - namespace: ai-gateway
+      server: https://kubernetes.default.svc
+    - namespace: rag-platform
+      server: https://kubernetes.default.svc
+    - namespace: model-serving
+      server: https://kubernetes.default.svc
+    - namespace: agent-platform
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
+  namespaceResourceWhitelist:
+    - group: "apps"
+      kind: Deployment
+    - group: ""
+      kind: Service
+    - group: ""
+      kind: ConfigMap
+    - group: "autoscaling"
+      kind: HorizontalPodAutoscaler

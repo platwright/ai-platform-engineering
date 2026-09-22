@@ -1,0 +1,15 @@
+{
+  "application": {
+    "name": "acme-sample-agent",
+    "environment": "local",
+    "listen_host": "127.0.0.1",
+    "listen_port": 8085
+  },
+  "backend_agent_api": {
+    "base_url": "http://127.0.0.1:8084",
+    "timeout_seconds": 30
+  },
+  "storage": {
+    "runs_dir": "../runs"
+  }
+}

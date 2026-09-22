@@ -1,0 +1,31 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: rag-platform
+  title: RAG Platform
+  description: >
+    Retrieval-Augmented Generation as a managed platform service. Provides
+    per-tenant document ingestion, vector search with reranking, and grounded
+    generation through the AI gateway. Application teams register a RAG service
+    and get a query endpoint without managing their own retrieval infrastructure.
+  tags:
+    - ai-platform
+    - rag
+    - retrieval
+    - production-ready
+  links:
+    - url: http://localhost:8090
+      title: Local Development Endpoint
+    - url: http://localhost:8090/services
+      title: Registered Services
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+spec:
+  type: service
+  lifecycle: production
+  owner: group:platform-team
+  system: ai-platform
+  providesApis:
+    - rag-platform-api
+  dependsOn:
+    - component:ai-gateway

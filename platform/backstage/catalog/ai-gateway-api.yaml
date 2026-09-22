@@ -1,0 +1,96 @@
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: ai-gateway-api
+  title: AI Gateway API
+  description: >
+    Chat and routing API. POST /api/chat returns a model response through the
+    configured routing policy. GET /metrics returns per-application usage counters.
+  tags:
+    - ai-platform
+    - openapi
+spec:
+  type: openapi
+  lifecycle: production
+  owner: group:platform-team
+  system: ai-platform
+  definition: |
+    openapi: "3.0.3"
+    info:
+      title: AI Gateway
+      version: "2.0"
+      description: >
+        Unified chat endpoint with routing, rate limiting, caching, and
+        per-application usage tracking.
+    paths:
+      /api/chat:
+        post:
+          summary: Send a chat message
+          description: >
+            Routes the request to the configured model provider based on routing
+            policy. Returns a normalized response regardless of upstream provider.
+          requestBody:
+            required: true
+            content:
+              application/json:
+                schema:
+                  type: object
+                  required: [message]
+                  properties:
+                    message:
+                      type: string
+                      description: The user message to send to the model.
+                    provider:
+                      type: string
+                      description: >
+                        Optional provider alias override. Omit to use routing
+                        policy selection.
+                    temperature:
+                      type: number
+                      minimum: 0
+                      maximum: 2
+                    max_tokens:
+                      type: integer
+                      minimum: 1
+          responses:
+            "200":
+              description: Model response with usage metadata
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      success:
+                        type: boolean
+                      response:
+                        type: object
+                        properties:
+                          text:
+                            type: string
+                          model:
+                            type: string
+                          usage:
+                            type: object
+                            properties:
+                              prompt_tokens:
+                                type: integer
+                              completion_tokens:
+                                type: integer
+                          cached:
+                            type: boolean
+            "429":
+              description: Rate limit exceeded for this application
+            "503":
+              description: No upstream provider available
+      /health:
+        get:
+          summary: Health check
+          responses:
+            "200":
+              description: Gateway is healthy
+      /metrics:
+        get:
+          summary: Usage metrics per application
+          responses:
+            "200":
+              description: Request counts, cache hit rates, and provider breakdown

@@ -1,0 +1,24 @@
+{
+  "application": {
+    "name": "acme-rag-platform",
+    "environment": "local",
+    "listen_host": "127.0.0.1",
+    "listen_port": 8083
+  },
+  "engine": {
+    "sample_rag_config": "../../../applications/sample-rag/config/app.example.json",
+    "backend_model_api_base_url": "http://127.0.0.1:8090",
+    "backend_timeout_seconds": 30
+  },
+  "storage": {
+    "catalog_file": "../state/catalog.json",
+    "state_dir": "../state",
+    "runs_dir": "../runs"
+  },
+  "defaults": {
+    "top_k": 4,
+    "rerank_top_n": 2,
+    "chunk_size": 80,
+    "chunk_overlap": 20
+  }
+}

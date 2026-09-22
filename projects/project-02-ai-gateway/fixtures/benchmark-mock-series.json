@@ -1,0 +1,92 @@
+{
+  "responses": [
+    {
+      "status_code": 200,
+      "latency_ms": 420,
+      "body": {
+        "model": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+        "choices": [
+          {
+            "index": 0,
+            "finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "GPU memory matters because model weights, activations, and KV cache all need space during inference. When memory is insufficient, serving capacity and context limits shrink."
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 18,
+          "completion_tokens": 30,
+          "total_tokens": 48
+        }
+      }
+    },
+    {
+      "status_code": 200,
+      "latency_ms": 610,
+      "body": {
+        "model": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+        "choices": [
+          {
+            "index": 0,
+            "finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "A model server exposes inference behavior, while an application API adds product-specific logic, prompts, validation, and response shaping."
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 16,
+          "completion_tokens": 24,
+          "total_tokens": 40
+        }
+      }
+    },
+    {
+      "status_code": 200,
+      "latency_ms": 780,
+      "body": {
+        "model": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+        "choices": [
+          {
+            "index": 0,
+            "finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "TTFT means time to first token. It captures how quickly a user sees the model start responding, which is important for perceived latency in chat systems."
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 20,
+          "completion_tokens": 32,
+          "total_tokens": 52
+        }
+      }
+    },
+    {
+      "status_code": 200,
+      "latency_ms": 520,
+      "body": {
+        "model": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+        "choices": [
+          {
+            "index": 0,
+            "finish_reason": "stop",
+            "message": {
+              "role": "assistant",
+              "content": "Batching improves throughput because the server can use accelerator resources more efficiently across several requests at once."
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 17,
+          "completion_tokens": 23,
+          "total_tokens": 40
+        }
+      }
+    }
+  ]
+}

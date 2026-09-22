@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: vllm-open-model
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
+spec:
+  rules:
+    - host: vllm.local
+      http:
+        paths:
+          - path: /v1/chat/completions
+            pathType: Prefix
+            backend:
+              service:
+                name: vllm-open-model
+                port:
+                  number: 8000

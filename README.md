@@ -44,14 +44,37 @@ By the end, you should be able to explain not only how these systems work, but h
 1. Read [docs/course-guide.md](docs/course-guide.md).
 2. Review [docs/prerequisites.md](docs/prerequisites.md).
 3. Complete [modules/00-getting-started/README.md](modules/00-getting-started/README.md).
-4. Run the setup checks from [scripts/setup/check-prereqs.ps1](scripts/setup/check-prereqs.ps1) or [scripts/setup/check-prereqs.sh](scripts/setup/check-prereqs.sh).
-5. Create your personal workbook using [scripts/setup/init-workbook.ps1](scripts/setup/init-workbook.ps1) or [scripts/setup/init-workbook.sh](scripts/setup/init-workbook.sh).
+4. Complete [modules/01-ai-foundations/README.md](modules/01-ai-foundations/README.md).
+5. Run the setup checks from [scripts/setup/check-prereqs.ps1](scripts/setup/check-prereqs.ps1) or [scripts/setup/check-prereqs.sh](scripts/setup/check-prereqs.sh).
+6. Create your personal workbook using [scripts/setup/init-workbook.ps1](scripts/setup/init-workbook.ps1) or [scripts/setup/init-workbook.sh](scripts/setup/init-workbook.sh).
 
 ## Current Status
 
-- Foundation scaffolding: in progress
+- Foundation scaffolding: complete
 - Module 00 - Getting Started: complete
-- Modules 01-18: planned
+- Module 01 - AI Foundations: complete
+- Module 02 - LLM Foundations: complete
+- Module 03 - AI Application Architecture: complete
+- Module 04 - Containers and AI Workloads: complete
+- Module 05 - Kubernetes for AI: complete
+- Module 06 - GPU and Accelerators: complete
+- Module 07 - Model Serving: complete
+- Module 08 - AI Gateway: complete
+- Module 09 - RAG Platform: complete
+- Module 10 - Agent Platform: complete
+- Module 11 - LLMOps: complete
+- Module 12 - Observability: complete
+- Module 13 - AI Platform Security: complete
+- Module 14 - Reliability: complete
+- Module 15 - Scaling and Performance: complete
+- Module 16 - AI FinOps: complete
+- Module 17 - Developer Platform: complete
+- Module 18 - Capstone: complete
+- Project 01 - Unified Model Client: complete
+- Project 02 - Open Model Serving on Kubernetes: complete
+- Project 03 - RAG As A Service: complete
+- Project 04 - Agent Platform: complete
+- Modules 11-18: planned with full structural descriptions
 
 ## Initial Repository Shape
 
@@ -73,7 +96,9 @@ Later modules will fill those areas with labs, reference architectures, platform
 
 ## Recommended Learning Flow
 
-If you are new to AI platform work, follow the modules in order. If you already know container and Kubernetes fundamentals, Module 00 will help you align on scope, workflow, and the course architecture before you jump into later sections.
+If you are new to AI platform work, follow the modules in order. Module 00 establishes the role, tooling, and course narrative. Module 01 gives you the workload mental model. Module 02 explains how LLM inference actually works — tokenization, generation parameters, streaming, structured outputs, tool calling, and the hosted vs self-hosted tradeoff. Module 03 shows what an AI application looks like before it is containerized or moved into Kubernetes. Module 04 packages that application into a local stack, Module 05 moves the same stack into Kubernetes, Module 06 explains accelerators, Module 07 turns model serving into a real runtime concern, Module 08 introduces a shared AI gateway, Module 09 turns retrieval into a reusable platform capability, and Module 10 adds safe tool use and agent platform controls.
+
+See [docs/learning-paths.md](docs/learning-paths.md) for role-specific sequences and time estimates.
 
 ## License
 

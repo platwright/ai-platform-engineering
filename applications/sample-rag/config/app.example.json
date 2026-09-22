@@ -1,0 +1,27 @@
+{
+  "application": {
+    "name": "acme-sample-rag",
+    "environment": "local",
+    "listen_host": "127.0.0.1",
+    "listen_port": 8081
+  },
+  "backend_model_api": {
+    "base_url": "http://127.0.0.1:8090",
+    "timeout_seconds": 30,
+    "application_id": "sample-rag"
+  },
+  "retrieval": {
+    "dimensions": 128,
+    "chunk_size": 80,
+    "chunk_overlap": 20,
+    "top_k": 4,
+    "rerank_top_n": 2
+  },
+  "prompts": {
+    "grounding_system_prompt": "Use only the provided context. If the answer is not supported by the context, say so clearly."
+  },
+  "storage": {
+    "state_file": "../state/index.json",
+    "runs_dir": "../runs"
+  }
+}

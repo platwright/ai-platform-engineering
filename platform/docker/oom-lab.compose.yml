@@ -1,0 +1,7 @@
+services:
+  memory-hog:
+    image: python:3.11-slim
+    command: ["python", "/lab/oom_memory_hog.py"]
+    volumes:
+      - ./labs:/lab:ro
+    mem_limit: 64m

@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gpu-inference-example
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gpu-inference-example
+  template:
+    metadata:
+      labels:
+        app: gpu-inference-example
+    spec:
+      nodeSelector:
+        accelerator: nvidia
+      tolerations:
+        - key: dedicated
+          operator: Equal
+          value: gpu
+          effect: NoSchedule
+      containers:
+        - name: gpu-inference
+          image: vllm/vllm-openai:latest
+          args:
+            - --model
+            - TinyLlama/TinyLlama-1.1B-Chat-v1.0
+          ports:
+            - containerPort: 8000
+          resources:
+            requests:
+              cpu: "2"
+              memory: 8Gi
+              nvidia.com/gpu: "1"
+            limits:
+              cpu: "4"
+              memory: 16Gi
+              nvidia.com/gpu: "1"

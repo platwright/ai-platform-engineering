@@ -1,0 +1,27 @@
+{
+  "status_code": 200,
+  "headers": {
+    "x-request-id": "acme-reliable-success-001"
+  },
+  "body": {
+    "id": "chatcmpl-acme-reliable-001",
+    "object": "chat.completion",
+    "created": 1799788800,
+    "model": "acme-reliable-v1",
+    "choices": [
+      {
+        "index": 0,
+        "finish_reason": "stop",
+        "message": {
+          "role": "assistant",
+          "content": "Configuration is part of runtime behavior in AI applications because it controls which model is used, which prompt is loaded, and how generation settings influence output quality, latency, and cost. Changing those settings can alter the product experience even when no code changes are deployed."
+        }
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 31,
+      "completion_tokens": 46,
+      "total_tokens": 77
+    }
+  }
+}

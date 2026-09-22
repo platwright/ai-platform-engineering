@@ -1,0 +1,1 @@
+Explain why stateless application processes are easier to scale than stateful ones in AI systems.

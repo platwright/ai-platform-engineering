@@ -1,0 +1,27 @@
+{
+  "status_code": 200,
+  "headers": {
+    "x-request-id": "acme-fast-success-001"
+  },
+  "body": {
+    "id": "chatcmpl-acme-fast-001",
+    "object": "chat.completion",
+    "created": 1799788800,
+    "model": "acme-fast-v1",
+    "choices": [
+      {
+        "index": 0,
+        "finish_reason": "stop",
+        "message": {
+          "role": "assistant",
+          "content": "A stateless AI application does not rely on in-memory history from earlier requests to behave correctly, which makes horizontal scaling easier. A stateful AI application depends on conversation history, memory, or external context, which can improve experience but requires explicit session or data stores to scale safely."
+        }
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 34,
+      "completion_tokens": 51,
+      "total_tokens": 85
+    }
+  }
+}
