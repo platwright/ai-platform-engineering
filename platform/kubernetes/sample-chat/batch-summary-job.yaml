@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: batch-summary
+spec:
+  backoffLimit: 2
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: batch-summary
+          image: aipe/sample-chat:local
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: sample-chat-config
+          command:
+            - python
+            - app.py
+            - request
+            - --message
+            - Summarize why containerized AI applications should separate application logic from model access logic.
+            - --no-save

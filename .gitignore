@@ -17,3 +17,15 @@ plan/
 
 *.log
 *.tmp
+modules/01-ai-foundations/project/runs/*.json
+projects/project-01-model-api/runs/*.json
+applications/sample-chat/runs/*.json
+projects/project-02-ai-gateway/runs/*.json
+projects/project-02-ai-gateway/runs/*.md
+platform/docker/ai-gateway-service/runs/*.json
+applications/sample-rag/runs/*.json
+applications/sample-rag/state/*.json
+projects/project-03-rag-platform/runs/*.json
+projects/project-03-rag-platform/state/*.json
+projects/project-04-agent-platform/runs/*.json
+applications/sample-agent/runs/*.json

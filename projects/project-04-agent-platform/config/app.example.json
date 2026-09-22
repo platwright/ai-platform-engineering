@@ -1,0 +1,17 @@
+{
+  "application": {
+    "name": "acme-agent-platform",
+    "environment": "local",
+    "listen_host": "127.0.0.1",
+    "listen_port": 8084
+  },
+  "platform_services": {
+    "rag_platform_base_url": "http://127.0.0.1:8083",
+    "gateway_base_url": "http://127.0.0.1:8090",
+    "default_rag_service": "team-a-kb",
+    "timeout_seconds": 30
+  },
+  "approval": {
+    "delete_service_token": "approved:delete-rag-service"
+  }
+}

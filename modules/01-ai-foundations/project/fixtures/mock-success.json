@@ -1,0 +1,27 @@
+{
+  "status_code": 200,
+  "headers": {
+    "x-request-id": "mock-success-001"
+  },
+  "body": {
+    "id": "chatcmpl-mock-success-001",
+    "object": "chat.completion",
+    "created": 1799788800,
+    "model": "mock-foundation-model-v1",
+    "choices": [
+      {
+        "index": 0,
+        "finish_reason": "stop",
+        "message": {
+          "role": "assistant",
+          "content": "Artificial intelligence is the broad field of building systems that perform tasks associated with human intelligence. Machine learning is a subset that learns patterns from data. Deep learning is a subset of machine learning that uses multi-layer neural networks. Operationally, AI systems often need policy and observability controls, ML systems require data and model lifecycle handling, and deep learning systems frequently introduce heavier memory and accelerator demands."
+        }
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 36,
+      "completion_tokens": 74,
+      "total_tokens": 110
+    }
+  }
+}

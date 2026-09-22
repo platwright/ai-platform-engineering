@@ -1,0 +1,13 @@
+{
+  "status_code": 429,
+  "headers": {
+    "x-request-id": "mock-rate-limit-001"
+  },
+  "body": {
+    "error": {
+      "message": "Rate limit exceeded for model mock-foundation-model-v1. Retry after capacity recovers.",
+      "type": "rate_limit_error",
+      "code": "rate_limit_exceeded"
+    }
+  }
+}

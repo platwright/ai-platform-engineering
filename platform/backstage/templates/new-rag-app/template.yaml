@@ -1,0 +1,111 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: new-rag-app
+  title: New RAG-Powered Application
+  description: >
+    Scaffold a new application that queries the Acme AI RAG platform for
+    grounded responses. Generates a working app.py, configuration, a
+    catalog-info.yaml entry, and a starter eval dataset.
+  tags:
+    - ai-platform
+    - rag
+    - golden-path
+spec:
+  owner: group:platform-team
+  type: service
+
+  parameters:
+    - title: Application Details
+      required:
+        - appName
+        - teamName
+        - ragServiceName
+      properties:
+        appName:
+          title: Application Name
+          type: string
+          description: Lowercase slug used for the service name and directory (e.g. docs-assistant).
+          pattern: "^[a-z][a-z0-9-]{2,39}$"
+          ui:autofocus: true
+        teamName:
+          title: Owning Team
+          type: string
+          description: The team that owns this application (used for catalog ownership).
+          pattern: "^[a-z][a-z0-9-]{1,39}$"
+        description:
+          title: Description
+          type: string
+          description: One-sentence description of what this application does.
+          default: "RAG-powered application using the Acme AI platform"
+
+    - title: Platform Configuration
+      required:
+        - ragServiceName
+        - modelTier
+      properties:
+        ragServiceName:
+          title: RAG Service Name
+          type: string
+          description: >
+            The name of the RAG service registered in the RAG platform that
+            this application will query (e.g. team-a-kb).
+          pattern: "^[a-z][a-z0-9-]{2,39}$"
+        modelTier:
+          title: Model Tier
+          type: string
+          description: Default model tier for LLM calls through the AI gateway.
+          default: fast
+          enum:
+            - fast
+            - smart
+          enumNames:
+            - "Fast (lower cost, suitable for most queries)"
+            - "Smart (higher cost, better reasoning)"
+        listenPort:
+          title: Listen Port
+          type: integer
+          description: Port the application will listen on locally.
+          default: 8085
+          minimum: 1024
+          maximum: 65535
+
+  steps:
+    - id: fetch-template
+      name: Fetch Application Skeleton
+      action: fetch:template
+      input:
+        url: ./skeleton
+        values:
+          appName: ${{ parameters.appName }}
+          teamName: ${{ parameters.teamName }}
+          description: ${{ parameters.description }}
+          ragServiceName: ${{ parameters.ragServiceName }}
+          modelTier: ${{ parameters.modelTier }}
+          listenPort: ${{ parameters.listenPort }}
+
+    - id: create-catalog-entry
+      name: Register In Backstage Catalog
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps['fetch-template'].output.repoContentsUrl }}
+        catalogInfoPath: /catalog-info.yaml
+
+    - id: publish
+      name: Create Repository
+      action: publish:github
+      input:
+        allowedHosts: [github.com]
+        description: ${{ parameters.description }}
+        repoUrl: github.com?repo=${{ parameters.appName }}&owner=acme-ai
+        defaultBranch: main
+
+  output:
+    links:
+      - title: Repository
+        url: ${{ steps.publish.output.remoteUrl }}
+      - title: Open In Catalog
+        icon: catalog
+        entityRef: ${{ steps['create-catalog-entry'].output.entityRef }}
+      - title: RAG Platform
+        url: http://localhost:8090/services/${{ parameters.ragServiceName }}

@@ -1,0 +1,4 @@
+Explain why GPU memory matters for LLM inference.
+Explain the difference between a model server and an application API.
+Explain what TTFT means and why it matters.
+Explain why batching can improve model serving throughput.

@@ -1,0 +1,67 @@
+services:
+  model-api:
+    build:
+      context: ../../projects/project-01-model-api
+    image: aipe/project-01-model-api:local
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/healthz', timeout=5)
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  sample-chat:
+    build:
+      context: ../../applications/sample-chat
+    image: aipe/sample-chat:local
+    depends_on:
+      model-api:
+        condition: service_healthy
+    environment:
+      MODEL_API_BASE_URL: http://model-api:8000
+      MODEL_API_PROVIDER: acme-fast
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/readyz', timeout=5)
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  redis:
+    image: redis:7-alpine
+    profiles:
+      - infra
+    ports:
+      - "6379:6379"
+
+  qdrant:
+    image: qdrant/qdrant:v1.13.2
+    profiles:
+      - infra
+    ports:
+      - "6333:6333"
+    volumes:
+      - qdrant-data:/qdrant/storage
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.62.0
+    profiles:
+      - observe
+    ports:
+      - "16686:16686"
+      - "4318:4318"
+
+volumes:
+  qdrant-data:

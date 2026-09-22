@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: aipe-sample-chat
+resources:
+  - namespace.yaml
+  - configmap-sample-chat.yaml
+  - secret-openai-compatible-provider.template.yaml
+  - deployment-model-api.yaml
+  - service-model-api.yaml
+  - deployment-sample-chat.yaml
+  - service-sample-chat.yaml
+  - sample-chat-hpa.yaml
+  - batch-summary-job.yaml
+  - qdrant-service.yaml
+  - qdrant-statefulset.yaml
+  - ingress-sample-chat.yaml

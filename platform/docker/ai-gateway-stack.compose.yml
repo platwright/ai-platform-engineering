@@ -1,0 +1,39 @@
+services:
+  model-api:
+    build:
+      context: ../../projects/project-01-model-api
+    image: aipe/project-01-model-api:local
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/healthz', timeout=5)
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  ai-gateway:
+    build:
+      context: ./ai-gateway-service
+    image: aipe/ai-gateway:local
+    depends_on:
+      model-api:
+        condition: service_healthy
+    environment:
+      PROJECT01_API_BASE_URL: http://model-api:8000
+    ports:
+      - "8090:8090"
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - import urllib.request; urllib.request.urlopen('http://127.0.0.1:8090/healthz', timeout=5)
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s

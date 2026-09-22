@@ -1,0 +1,29 @@
+{
+  "application": {
+    "name": "acme-ai-gateway",
+    "environment": "local",
+    "listen_host": "127.0.0.1",
+    "listen_port": 8090
+  },
+  "backend_model_api": {
+    "base_url": "http://127.0.0.1:8000",
+    "timeout_seconds": 30
+  },
+  "routing": {
+    "default_provider": "acme-reliable",
+    "simple_request_max_chars": 120,
+    "simple_request_provider": "acme-fast",
+    "sensitive_terms": [
+      "private",
+      "confidential",
+      "sensitive"
+    ],
+    "sensitive_provider": "acme-reliable",
+    "fallback_provider": "acme-reliable"
+  },
+  "policies": {
+    "rate_limit_per_minute": 5,
+    "exact_prompt_cache_enabled": true,
+    "cache_ttl_seconds": 300
+  }
+}
