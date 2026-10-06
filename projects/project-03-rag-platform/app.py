@@ -174,14 +174,19 @@ def create_service(config: dict[str, Any], service_name: str, tenant: str, docs_
     catalog = load_catalog(config)
     if service_name in catalog["services"]:
         raise ValueError(f"Service already exists: {service_name}")
+
+    def resolve_default(key: str) -> int:
+        value = overrides.get(key)
+        return int(value if value is not None else config["defaults"][key])
+
     entry = {
         "service_name": service_name,
         "tenant": tenant,
         "docs_dir": str(Path(docs_dir).resolve()),
-        "top_k": int(overrides.get("top_k", config["defaults"]["top_k"])),
-        "rerank_top_n": int(overrides.get("rerank_top_n", config["defaults"]["rerank_top_n"])),
-        "chunk_size": int(overrides.get("chunk_size", config["defaults"]["chunk_size"])),
-        "chunk_overlap": int(overrides.get("chunk_overlap", config["defaults"]["chunk_overlap"])),
+        "top_k": resolve_default("top_k"),
+        "rerank_top_n": resolve_default("rerank_top_n"),
+        "chunk_size": resolve_default("chunk_size"),
+        "chunk_overlap": resolve_default("chunk_overlap"),
         "application_id": f"rag-service:{service_name}",
         "created_at": iso_timestamp(),
     }
