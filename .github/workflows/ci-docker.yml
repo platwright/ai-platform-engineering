@@ -1,0 +1,60 @@
+name: CI – Docker build
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "projects/project-01-model-api/**"
+      - "projects/project-03-rag-platform/**"
+      - "projects/project-04-agent-platform/**"
+      - "applications/sample-chat/**"
+      - "platform/docker/ai-gateway-service/**"
+      - ".github/workflows/ci-docker.yml"
+  push:
+    branches: [main]
+    paths:
+      - "projects/project-01-model-api/**"
+      - "projects/project-03-rag-platform/**"
+      - "projects/project-04-agent-platform/**"
+      - "applications/sample-chat/**"
+      - "platform/docker/ai-gateway-service/**"
+      - ".github/workflows/ci-docker.yml"
+
+jobs:
+  build:
+    name: Build ${{ matrix.name }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: project-01-model-api
+            context: projects/project-01-model-api
+
+          - name: project-03-rag-platform
+            context: projects/project-03-rag-platform
+
+          - name: project-04-agent-platform
+            context: projects/project-04-agent-platform
+
+          - name: sample-chat
+            context: applications/sample-chat
+
+          - name: ai-gateway-service
+            context: platform/docker/ai-gateway-service
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build ${{ matrix.name }}
+        uses: docker/build-push-action@v6
+        with:
+          context: ${{ matrix.context }}
+          push: false
+          tags: ci/${{ matrix.name }}:${{ github.sha }}
+          cache-from: type=gha,scope=${{ matrix.name }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.name }}
