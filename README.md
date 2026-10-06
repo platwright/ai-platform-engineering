@@ -74,7 +74,6 @@ By the end, you should be able to explain not only how these systems work, but h
 - Project 02 - Open Model Serving on Kubernetes: complete
 - Project 03 - RAG As A Service: complete
 - Project 04 - Agent Platform: complete
-- Modules 11-18: planned with full structural descriptions
 
 ## Initial Repository Shape
 
