@@ -1,0 +1,78 @@
+name: CI – Kubernetes manifests
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "platform/kubernetes/**"
+      - ".github/workflows/ci-k8s.yml"
+  push:
+    branches: [main]
+    paths:
+      - "platform/kubernetes/**"
+      - ".github/workflows/ci-k8s.yml"
+
+jobs:
+  yaml-lint:
+    name: YAML lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install yamllint
+        run: pip install --quiet yamllint
+
+      - name: Lint Kubernetes YAML
+        run: |
+          yamllint \
+            -d "{extends: default, rules: {line-length: {max: 200}, document-start: disable, truthy: disable}}" \
+            platform/kubernetes/
+
+  schema-validate:
+    name: Schema validation (kubeconform)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install kubeconform
+        run: |
+          curl -sSL https://github.com/yannh/kubeconform/releases/latest/download/kubeconform-linux-amd64.tar.gz \
+            | tar -xz -C /usr/local/bin kubeconform
+          chmod +x /usr/local/bin/kubeconform
+
+      # Validate all manifests; skip kustomization.yaml (not a standard k8s resource)
+      # and secret template files (they contain placeholder values, not real secrets).
+      - name: Validate manifests with kubeconform
+        run: |
+          find platform/kubernetes -name '*.yaml' \
+            ! -name 'kustomization.yaml' \
+            ! -name '*.template.yaml' \
+            | sort \
+            | xargs kubeconform \
+                -strict \
+                -ignore-missing-schemas \
+                -summary
+
+  kustomize-build:
+    name: Kustomize build
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        overlay:
+          - platform/kubernetes/ai-gateway
+          - platform/kubernetes/gpu-workloads
+          - platform/kubernetes/model-serving-vllm
+          - platform/kubernetes/sample-chat
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v4
+
+      - name: Kustomize build – ${{ matrix.overlay }}
+        run: kubectl kustomize ${{ matrix.overlay }} > /dev/null

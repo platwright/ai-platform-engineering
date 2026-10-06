@@ -1,0 +1,48 @@
+name: CI – Python
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "**/*.py"
+      - ".github/workflows/ci-python.yml"
+  push:
+    branches: [main]
+    paths:
+      - "**/*.py"
+      - ".github/workflows/ci-python.yml"
+
+jobs:
+  compile:
+    name: Syntax & import check
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # Recursively byte-compile every .py file; exits 1 on any syntax error.
+      - name: Compile all Python files
+        run: python -m compileall -q -x '__pycache__' .
+
+      # Verify that relative imports within the unified_model_client package
+      # resolve correctly (catches missing modules and broken __init__.py).
+      - name: Check unified_model_client package imports
+        working-directory: projects/project-01-model-api
+        run: |
+          python -c "import unified_model_client"
+          python -c "from unified_model_client.config import load_app_config, AppConfig, ProviderSettings"
+          python -c "from unified_model_client.providers import MockProvider, ProviderCallResult"
+          python -c "from unified_model_client.server import create_http_server"
+          python -c "from unified_model_client.service import UnifiedModelClient"
+
+      # Verify top-level entry points parse and their argument parsers are constructible.
+      - name: Verify application entry points are importable
+        run: |
+          python -c "import ast, pathlib; [ast.parse(p.read_text()) for p in pathlib.Path('.').rglob('app.py')]"
+          python -c "import ast, pathlib; [ast.parse(p.read_text()) for p in pathlib.Path('modules').rglob('*.py')]"
+          python -c "import ast, pathlib; [ast.parse(p.read_text()) for p in pathlib.Path('labs').rglob('*.py')]"

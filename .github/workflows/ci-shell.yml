@@ -1,0 +1,27 @@
+name: CI – Shell scripts
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "**/*.sh"
+      - ".github/workflows/ci-shell.yml"
+  push:
+    branches: [main]
+    paths:
+      - "**/*.sh"
+      - ".github/workflows/ci-shell.yml"
+
+jobs:
+  shellcheck:
+    name: ShellCheck
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run ShellCheck
+        uses: ludeeus/action-shellcheck@2.0.0
+        with:
+          scandir: "./scripts"
+          severity: error
