@@ -96,4 +96,4 @@ If you already have strong LLM API experience, Module 01 will be a quick read bu
 | 08 - AI Gateway | Intermediate | 5–7 |
 | 09 - RAG Platform | Intermediate | 6–8 |
 | 10 - Agent Platform | Intermediate–Advanced | 6–8 |
-| 11–18 (planned) | Advanced | 5–8 each |
+| 11–18 | Advanced | 5–8 each |
