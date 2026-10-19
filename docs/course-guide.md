@@ -29,6 +29,20 @@ Most modules use these files:
 - `solution.md`: reference implementation or expected outputs
 - `references.md`: external reading
 
+## Diagram Library
+
+Use the architecture exports in the repository as a navigational map for the course:
+
+- [Platform overview](../diagrams/platform-overview.png)
+- [Platform evolution](../diagrams/platform-evolution.png)
+- [RAG pipeline](../diagrams/rag-pipeline.png)
+- [Agent loop](../diagrams/agent-loop.png)
+- [Model serving layers](../diagrams/model-serving-layers.png)
+- [Gateway routing](../diagrams/gateway-routing.png)
+- [Latency decomposition](../diagrams/latency-decomposition.png)
+- [Failure taxonomy](../diagrams/failure-taxonomy.png)
+- [Cost attribution](../diagrams/cost-attribution.png)
+
 ## Learning Model
 
 The course starts small and local, then grows into a production-oriented platform:
