@@ -30,6 +30,18 @@ flowchart TD
     Platform --> Support[Identity, Secrets, Evals, GitOps, CI/CD, Tracing, Metrics, Logging, Cost, Policy, SLOs]
 ```
 
+## Diagram References
+
+The course uses the exported architecture images in the repository to reinforce the system view across modules:
+
+- [Platform overview](../diagrams/platform-overview.png)
+- [Platform evolution](../diagrams/platform-evolution.png)
+- [RAG pipeline](../diagrams/rag-pipeline.png)
+- [Agent loop](../diagrams/agent-loop.png)
+- [Gateway routing](../diagrams/gateway-routing.png)
+- [Latency decomposition](../diagrams/latency-decomposition.png)
+- [Failure taxonomy](../diagrams/failure-taxonomy.png)
+
 ## Why This Matters
 
 The repository is intentionally not a collection of unrelated tutorials. Every module adds another capability to the same platform story so learners can reason about interfaces, ownership, and production tradeoffs.

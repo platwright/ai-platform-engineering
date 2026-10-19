@@ -48,6 +48,18 @@ By the end, you should be able to explain not only how these systems work, but h
 5. Run the setup checks from [scripts/setup/check-prereqs.ps1](scripts/setup/check-prereqs.ps1) or [scripts/setup/check-prereqs.sh](scripts/setup/check-prereqs.sh).
 6. Create your personal workbook using [scripts/setup/init-workbook.ps1](scripts/setup/init-workbook.ps1) or [scripts/setup/init-workbook.sh](scripts/setup/init-workbook.sh).
 
+## Diagram References
+
+The repository includes a diagram library for the platform narrative and module-specific architecture views. You can browse the full set in [diagrams/README.md](diagrams/README.md) and use the key exports below:
+
+- [Platform overview](diagrams/platform-overview.png)
+- [Platform evolution](diagrams/platform-evolution.png)
+- [RAG pipeline](diagrams/rag-pipeline.png)
+- [Agent loop](diagrams/agent-loop.png)
+- [AI gateway routing](diagrams/gateway-routing.png)
+- [Latency decomposition](diagrams/latency-decomposition.png)
+- [Failure taxonomy](diagrams/failure-taxonomy.png)
+
 ## Current Status
 
 - Foundation scaffolding: complete
